@@ -5,7 +5,7 @@ import hashlib
 from collections import deque
 import matplotlib.pyplot as plt
 
-tf.keras.mixed_precision.set_global_policy('mixed_float16')
+#tf.keras.mixed_precision.set_global_policy('mixed_float16')
 
 # Simple blockchain class for tamper prevention
 class Block:
@@ -147,7 +147,7 @@ class DQNAgent:
 
     def _build_model(self):
         model = RecurrentDuelingDQN(self.action_size)
-        model.compile(loss='mse', optimizer=tf.keras.optimizers.Adam(learning_rate=self.learning_rate), jit_compile=True)
+        model.compile(loss='mse', optimizer=tf.keras.optimizers.Adam(learning_rate=self.learning_rate), jit_compile=False)
         return model
 
     def remember(self, state, action, reward, next_state, done):
