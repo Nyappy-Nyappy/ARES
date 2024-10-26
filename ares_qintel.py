@@ -4,17 +4,17 @@ import random
 from collections import deque
 import matplotlib.pyplot as plt
 
-# 波動関数の時間発展行列の定義
+# Definition of the time evolution matrix for the wave function
 def time_evolution_matrix(dim, theta=0.1):
     """
-    シュレディンガー方程式の時間発展を模倣するための行列を定義
-    dim: 行列の次元
-    theta: 回転角、探索の度合いを制御
+    Defines a matrix to mimic time evolution in the Schrödinger equation.
+    dim: Dimension of the matrix
+    theta: Rotation angle, controls the degree of exploration
     """
     U = np.eye(dim) * np.cos(theta) + np.sin(theta) * np.roll(np.eye(dim), 1, axis=0)
     return U
 
-# 環境クラス
+# Environment class
 class QuantumInspiredEnvironment:
     def __init__(self, grid_size):
         self.grid_size = grid_size
@@ -52,7 +52,7 @@ class QuantumInspiredEnvironment:
 
         return self.get_state(), reward, done
 
-# エージェントクラス
+# Agent class
 class QuantumInspiredAgent:
     def __init__(self, state_size, action_size, time_evolution_matrix):
         self.state_size = state_size
@@ -64,7 +64,7 @@ class QuantumInspiredAgent:
         self.epsilon_decay = 0.995
         self.learning_rate = 0.001
         self.batch_size = 32
-        self.time_evolution_matrix = time_evolution_matrix  # 時間発展行列
+        self.time_evolution_matrix = time_evolution_matrix  # Time evolution matrix
         self.model = self._build_model()
 
     def _build_model(self):
@@ -84,7 +84,7 @@ class QuantumInspiredAgent:
             return random.randrange(self.action_size)
         act_values = self.model.predict(state)
         
-        # 擬似量子効果を反映
+        # Apply pseudo-quantum effect
         act_values = np.dot(self.time_evolution_matrix, act_values[0])
         return np.argmax(act_values)
 
@@ -104,7 +104,7 @@ class QuantumInspiredAgent:
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
 
-# メインのトレーニングループ
+# Main training loop
 if __name__ == "__main__":
     grid_size = 5
     env = QuantumInspiredEnvironment(grid_size=grid_size)
