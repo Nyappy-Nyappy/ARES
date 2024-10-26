@@ -1,0 +1,51 @@
+\documentclass[uplatex]{jsarticle}
+\usepackage{luatexja}
+\usepackage[utf8]{inputenc}
+\usepackage{zxjatype}
+\usepackage[japanese]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{ARES-QINTELとARES-DQNの収束速度に関する証明}
+\author{}
+\date{}
+\maketitle
+
+\section*{概要}
+本証明では, ARES-QINTELの収束速度がARES-DQNよりも速い理由を数式で示す. 特に, QINTELにおける量子インスパイアードベイズ最適化の行動選択が収束にどのように寄与するかについて説明する. 
+
+\section{行動選択の確率分布による収束加速}
+ARES-QINTELでは, 行動選択を確率分布に基づいて行い, Q値の平均と標準偏差を用いることで期待値の高い行動に集中する傾向がある. 
+
+行動選択の確率は次のように表される. 
+
+\begin{equation}
+P(a | s) = \Phi\left(\frac{Q(s, a) - \mu}{\sigma}\right)
+\end{equation}
+
+ここで, 
+\begin {itemize}
+\item $\( Q(s, a) \)$ は状態 $\( s \)$ で行動 $\( a \)$ を選択した際のQ値、
+\item $\( \mu \)$ と $\( \sigma \)$ はQ値の平均と標準偏差、
+\item $\( \Phi \)$ は正規分布の累積分布関数。
+\end {itemize}
+これにより, 高いQ値を持つ行動が他の行動よりも優先されるため, 累積報酬が高まりやすく, 収束が速くなる. 
+
+\section{漸化式による差分の期待値の拡大}
+ARES-QINTELとARES-DQNの行動選択に基づく収束速度の違いは, 次の漸化式で表され, なおQINTELの差分項は以下のように表される. 
+
+\begin{equation}
+\Delta_t^{\text{QINT}} = Q^{\pi_{\text{QINT}}}(s, a) - Q^{\pi_{\text{QINT}}}_{t-1}(s, a) = \gamma^t \int_{a} Q(s, a) \left( \Phi\left(\frac{Q(s, a) - \mu}{\sigma}\right) - \frac{1}{|A|} \right) da
+\end{equation}
+
+QINTELでは, 行動選択が確率分布に基づいているため, 期待値が高くなる. そのため, 期待値を取った場合の$\( \Delta_t^{\text{QINT}} \)$は, DQNのそれよりも高い傾向を示し、収束速度が速くなる. 
+
+\section{Q値の分散を利用した最適行動への迅速な収束}
+QINTELではQ値の分散が行動選択に影響を与える. Q値が他の行動に比べて大幅に高い場合, その行動が選ばれる確率が増加する. このため、最適行動への迅速な収束が見込まれる. 
+
+\section{結論}
+これにより、QINTELの収束速度がDQNよりも高くなることが示された. 
+
+\end{document}
