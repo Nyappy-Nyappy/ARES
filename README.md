@@ -9,9 +9,9 @@ Bayesian Optimization and Meta-Learning: ARES incorporates Bayesian optimization
 Quantum-Inspired Approaches: Utilizing probabilistic models inspired by quantum mechanics, ARES-QINTEL extends the RL framework to simulate quantum behavior in decision-making, broadening the scope of agent strategies and adaptive exploration.
 
 ## Code Structure
-* ares_core/ - Contains the core multi-resolution and meta-learning models.
-* ares_blockchain/ - Implements the blockchain for decentralized data integrity.
-* ares_qintel/ - Quantum-inspired models for advanced exploration strategies.
+* ares_core.py - Contains the core multi-resolution and meta-learning models.
+* ares_guardian.py - Implements the blockchain for decentralized data integrity.
+* ares_qintel.py - Quantum-inspired models for advanced exploration strategies.
 * examples/ - Example implementations and use cases for training agents in complex environments.
 
 ## Getting Started
