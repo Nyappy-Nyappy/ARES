@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from scipy.stats import norm
 import hashlib
 
-# ブロックチェーンと因果推論を含むブロッククラス
+# Block class that includes blockchain and causal inference
 class Block:
     def __init__(self, index, previous_hash, data):
         self.index = index
@@ -31,7 +31,7 @@ class Blockchain:
         new_block = Block(len(self.chain), self.get_latest_block().hash, data)
         self.chain.append(new_block)
 
-# 量子インスパイアードベイズ最適化による行動選択
+# Action selection using quantum-inspired Bayesian optimization
 class QuantumInspiredBayesianOptimizer:
     def __init__(self):
         self.samples = []
@@ -41,7 +41,7 @@ class QuantumInspiredBayesianOptimizer:
         probabilities = norm.cdf(q_values, loc=mean, scale=std_dev)
         return np.argmax(probabilities)
 
-# 部分観測での迷路環境
+# Maze environment with partial observation
 class PartialObservationMaze:
     def __init__(self, grid_size):
         self.grid_size = grid_size
@@ -78,7 +78,7 @@ class PartialObservationMaze:
 
         return self.get_partial_observation(), reward, done
 
-# エージェントクラス（ベイズ最適化と量子インスパイアードアプローチ）
+# Agent class (Bayesian optimization and quantum-inspired approach)
 class QuantumInspiredAgent:
     def __init__(self, state_size, action_size, blockchain):
         self.state_size = state_size
@@ -124,7 +124,7 @@ class QuantumInspiredAgent:
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
 
-# トレーニングループ
+# Training loop
 if __name__ == "__main__":
     grid_size = 5
     env = PartialObservationMaze(grid_size)
@@ -156,7 +156,7 @@ if __name__ == "__main__":
 
         agent.replay()
     
-    # スコアのプロット
+    # Plotting the scores
     plt.plot(scores)
     plt.xlabel('Episode')
     plt.ylabel('Score')
