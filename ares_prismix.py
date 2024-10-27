@@ -133,13 +133,17 @@ if __name__ == "__main__":
     blockchain = Blockchain()
     agent = QuantumInspiredAgent(state_size, action_size, blockchain)
     
-    episodes = 100
+    episodes = 1000
     scores = []
-    
+    cumulative_rewards = []
+    steps_per_episode = []
+    total_reward = 0
+
     for e in range(episodes):
         state = env.reset()
         state = np.reshape(state, [1] + list(state.shape))
-        total_reward = 0
+        episode_reward = 0
+        step_count = 0
 
         for time in range(200):
             action = agent.act(state)
@@ -147,18 +151,37 @@ if __name__ == "__main__":
             next_state = np.reshape(next_state, [1] + list(next_state.shape))
             agent.remember(state, action, reward, next_state, done)
             state = next_state
-            total_reward += reward
+            episode_reward += reward
+            step_count += 1
             if done:
-                print(f"Episode {e+1}/{episodes}, Score: {total_reward}, Epsilon: {agent.epsilon:.2}")
-                scores.append(total_reward)
-                blockchain.add_block({"episode": e, "score": total_reward})
                 break
 
+        scores.append(episode_reward)
+        cumulative_rewards.append(total_reward)
+        steps_per_episode.append(step_count)
+
+        total_reward += episode_reward
+        blockchain.add_block({"episode": e, "score": episode_reward})
         agent.replay()
-    
-    # Plotting the scores
+        print(f"Episode {e+1}/{episodes}, Episode Reward: {episode_reward}, Total Reward: {total_reward}")
+
+    # Plotting the episode scores
     plt.plot(scores)
     plt.xlabel('Episode')
-    plt.ylabel('Score')
+    plt.ylabel('Episode Score')
     plt.title('Score per Episode')
+    plt.show()
+
+    # Plotting cumulative rewards
+    plt.plot(cumulative_rewards)
+    plt.xlabel('Episode')
+    plt.ylabel('Cumulative Reward')
+    plt.title('Cumulative Reward per Episode')
+    plt.show()
+
+    # Plotting steps per episode
+    plt.plot(steps_per_episode)
+    plt.xlabel('Episode')
+    plt.ylabel('Steps per Episode')
+    plt.title('Steps to Goal per Episode')
     plt.show()
